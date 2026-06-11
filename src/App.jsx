@@ -3,7 +3,7 @@ import "./App.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import avatarImg from "./images/avatar.jpg";
-import { FaReact, FaJs, FaFigma, FaNodeJs, FaGitAlt, FaUserGraduate, FaAward, FaDatabase } from "react-icons/fa";
+import { FaReact, FaJs, FaFigma, FaNodeJs, FaUserGraduate, FaDatabase } from "react-icons/fa";
 import { SiTypescript, SiTailwindcss, SiHappycow, SiPostman } from "react-icons/si";
 import { MdWork } from "react-icons/md";
 import ParticlesBackground from "./ParticlesBackground";
@@ -71,21 +71,6 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-function AnimatedBar({ level, color, inView }) {
-  return (
-    <div style={{ height: 6, background: "#f0f0f0", borderRadius: 99, overflow: "hidden" }}>
-      <div
-        style={{
-          height: "100%",
-          width: inView ? `${level}%` : "0%",
-          background: color,
-          borderRadius: 99,
-          transition: "width 1.1s cubic-bezier(.4,0,.2,1)",
-        }}
-      />
-    </div>
-  );
-}
 
 export default function App() {
   const [active, setActive] = useState("Home");
@@ -363,8 +348,6 @@ export default function App() {
             <span className="spin-icon"><SiHappycow /></span>
             Contact
           </div>
-          <h2 className="section__title"></h2>
-
           <div className="contact__layout">
             <div className="contact__info">
               <div className="info-card">
