@@ -131,7 +131,7 @@ useEffect(() => {
           <div className="hero__socials">
             {[
               { Icon: FaGithub, url: "https://github.com/anhdunn" },
-              { Icon: FaLinkedin, url: "https://www.linkedin.com/in/tr%E1%BA%A7n-ng%E1%BB%8Dc-%C3%A1nh-d%C6%B0%C6%A1ng-undefined-166997403/?skipRedirect=true" },
+              { Icon: FaLinkedin, url: "https://www.linkedin.com/in/%C3%A1nh-d%C6%B0%C6%A1ng-tr%E1%BA%A7n-ng%E1%BB%8Dc-166997403/" },
               { Icon: FaFacebook , url: "https://www.facebook.com/duong0907" },
             ].map((s, i) => (
               <a
