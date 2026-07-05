@@ -16,7 +16,6 @@ export default function ParticlesBackground() {
     resize();
     window.addEventListener("resize", resize);
 
-    // ← track mouse qua window thay vì canvas
     const onMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
@@ -28,12 +27,12 @@ export default function ParticlesBackground() {
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
 
-    const dots = Array.from({ length: 80 }, () => ({
+    const dots = Array.from({ length: 30 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 0.8,
-      vy: (Math.random() - 0.5) * 0.8,
-      r: Math.random() * 2 + 1,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+      r: Math.random() * 1.2 + 0.8,
     }));
 
     const draw = () => {
@@ -47,7 +46,7 @@ export default function ParticlesBackground() {
 
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(150,150,150,0.6)";
+        ctx.fillStyle = "rgba(255,255,255,0.75)";
         ctx.fill();
       });
 
@@ -57,11 +56,11 @@ export default function ParticlesBackground() {
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
+          if (dist < 90) {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(180,180,180,${1 - dist / 150})`;
+            ctx.strokeStyle = `rgba(255,255,255,${(1 - dist / 100) * 0.35})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -74,11 +73,11 @@ export default function ParticlesBackground() {
           const dx = d.x - mouse.x;
           const dy = d.y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 180) {
+          if (dist < 120) {
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
             ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = `rgba(79,70,229,${1 - dist / 180})`;
+            ctx.strokeStyle = `rgba(59,130,246,${(1 - dist / 120) * 0.45})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -103,11 +102,10 @@ export default function ParticlesBackground() {
       ref={canvasRef}
       style={{
         position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: 0,
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 1,
         pointerEvents: "none",
       }}
     />

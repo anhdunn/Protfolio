@@ -7,8 +7,9 @@ import { FaReact, FaJs, FaFigma, FaNodeJs, FaUserGraduate, FaDatabase } from "re
 import { SiTypescript, SiTailwindcss, SiHappycow, SiPostman } from "react-icons/si";
 import { MdWork } from "react-icons/md";
 import ParticlesBackground from "./ParticlesBackground";
-import { SiAntdesign } from "react-icons/si";
+import antLogo from "./images/ant-design-logo.png";
 import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
+import Projects from "./Projects";
 
 const SKILLS = [
   { name: "React", icon: FaReact, cat: "Frontend", color: "#61dafb", level: 60 },
@@ -19,38 +20,9 @@ const SKILLS = [
   { name: "SQL Server", icon: FaDatabase, cat: "Backend", color: "#cc2927", level: 60 },
   { name: "REST API", icon: SiPostman, cat: "Backend", color: "#ff6c37", level: 40 },
   { name: "Figma", icon: FaFigma, cat: "Design", color: "#a259ff", level: 70 },
-  { name: "Ant Design", icon: SiAntdesign, cat: "Frontend", color: "#cc2927", level: 60},
+  { name: "Ant Design", image: antLogo, cat: "Frontend", level: 60,},
 ];
 
-const PROJECTS = [
-  // {
-  //   title: "Web tuyển dụng FamilyMart",
-  //   desc: "Dự án thực tập tại FamilyMart Vietnam — xây dựng giao diện trang web tuyển dụng cho Family Mart",
-  //   tags: ["React", "Ant Design", "Node.js", "MySQL"],
-  //   color: "#e8f0fe",
-  //   accent: "#4285f4",
-  //   icon: "🏪",
-  //   link: "#",
-  // },
-  // {
-  //   title: "E-COMMERCE WEBSITE FOR ONLINE FLOWER SHOPPING",
-  //   desc: "Ứng dụng mua sắm trực tuyến với giỏ hàng, trang sản phẩm, quản lý đơn hàng và giao diện quản trị đơn giản. Đồ án nhóm 2 người.",
-  //   tags: ["JavaScript", "CSS", "Node.js", "MongoDB", "Bootstrap"],
-  //   color: "#f0e8fe",
-  //   accent: "#7c3aed",
-  //   icon: "🛒",
-  //   link: "#",
-  // },
-  // {
-  //   title: "ATTENDANCE APPLICATION INTEGRATED WITH AI-BASED FACIAL RECOGNITION",
-  //   desc: "Giao diện quản lý nhân viên, chấm công và bảng lương với biểu đồ thống kê trực quan theo tháng. Đồ án nhóm 2 người.",
-  //   tags: ["React", "Chart.js", "Express", "SQLServer"],
-  //   color: "#e8fef0",
-  //   accent: "#059669",
-  //   icon: "📊",
-  //   link: "#",
-  // },
-];
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
@@ -82,10 +54,37 @@ export default function App() {
   const [projRef, projIn] = useInView(0.05);
   const [ctaRef, ctaIn] = useInView(0.1);
 
-  useEffect(() => {
+useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = ["home", "about", "skills", "projects", "contact"];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const name = id.charAt(0).toUpperCase() + id.slice(1);
+            setActive(name);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-40% 0px -50% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+    return () => observer.disconnect();
   }, []);
 
   const scrollTo = (id) => {
@@ -282,8 +281,16 @@ export default function App() {
               <div className="skill-icons-grid">
                 {SKILLS.filter((s) => s.cat === cat).map((s) => (
                   <div key={s.name} className="skill-icon-row">
-                    <div className="skill-icon-wrap" style={{ color: s.color }}>
-                      <s.icon />
+                    <div className="skill-icon-wrap">
+                      {s.image ? (
+                        <img
+                          src={s.image}
+                          alt={s.name}
+                          className="skill-logo"
+                        />
+                      ) : (
+                        <s.icon style={{ color: s.color }} />
+                      )}
                     </div>
                     <span className="skill-icon-name">{s.name}</span>
                     <div className="skill-icon-bar-wrap">
@@ -304,42 +311,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* PROJECTS */}
-      <section id="projects" className="projects section" ref={projRef}>
-        <div className={`section__inner ${projIn ? "fade-up" : "pre-anim"}`}>
-          <div className="section__tag-inline">
-            <span className="spin-icon"><SiHappycow /></span>
-            Projects
-          </div>
-          <div className="projects__grid">
-            {PROJECTS.map((p, i) => (
-              <div
-                key={p.title}
-                className="project-card"
-                style={{
-                  "--card-color": p.color,
-                  "--card-accent": p.accent,
-                  animationDelay: `${i * 0.12}s`,
-                }}
-              >
-                <div className="project-card__icon">{p.icon}</div>
-                <h3 className="project-card__title">{p.title}</h3>
-                <p className="project-card__desc">{p.desc}</p>
-                <div className="project-card__tags">
-                  {p.tags.map((t) => (
-                    <span key={t} className="tag">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <a href={p.link} className="project-card__link" style={{ color: p.accent }}>
-                  View more →
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Projects
+          projRef={projRef}
+          projIn={projIn}
+      />
 
       {/* CONTACT */}
       <section id="contact" className="contact section section--alt" ref={ctaRef}>

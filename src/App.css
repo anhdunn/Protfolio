@@ -7,12 +7,18 @@
 html { 
   scroll-behavior: smooth; 
   font-size: 16px; 
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none; 
 }
 
 body { 
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-  color: #1a1a2e; 
-  background: #fafafa; 
+  background: #050505;
+  color: #fff;
   line-height: 1.6; 
 }
 
@@ -23,14 +29,14 @@ body {
 }
 
 :root {
-  --accent: #082769;
-  --accent-light: #e0e7ff;
-  --accent-dark: #3730a3;
-  --text: #1a1a2e;
-  --text-muted: #6b7280;
+  --accent:#60A5FA;
+  --accent-light:rgba(96,165,250,.15);
+  --accent-dark:#3B82F6;
+  --text:#fff;
+  --text-muted: #fff;
   --bg: #fafafa;
   --bg-alt: #f3f4f8;
-  --card-bg: #ffffff;
+  --card-bg:#151515;
   --border: #e5e7eb;
   --nav-h: 68px;
   --radius: 16px;
@@ -73,10 +79,10 @@ body {
   transition: background .3s, box-shadow .3s, backdrop-filter .3s;
 }
 
-.nav--scrolled {
-  background: rgba(250,250,250,.88);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 var(--border);
+.nav--scrolled{
+    background:rgba(8,8,8,.8);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #222;
 }
 
 .nav__logo {
@@ -154,7 +160,7 @@ body {
   flex-wrap: wrap;
   position: relative;
   overflow: visible;
-  background: transparent;
+  background:#050505;
 }
 
 .particles-bg {
@@ -203,7 +209,7 @@ body {
   font-weight: 800;
   color: var(--text);
   line-height: 1.1;
-  letter-spacing: -0.2em;
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
 }
 
@@ -335,13 +341,13 @@ body {
 
 .floating-badge {
   position: absolute;
-  background: rgba(255,255,255,0.95);
+  background:rgba(25,25,25,.95);
   backdrop-filter: blur(14px);
   border-radius: 999px;
   padding: 10px 16px;
   font-size: .82rem;
   font-weight: 600;
-  color: var(--text);
+  color:#fff;
   box-shadow: 0 10px 30px rgba(0,0,0,.12);
   white-space: nowrap;
   animation: floatY 3s ease-in-out infinite;
@@ -353,7 +359,7 @@ body {
   justify-content: center;
   min-width: 120px;
   height: 48px;
-  border: 1px solid rgba(255,255,255,.4);
+  border:1px solid #2b2b2b;
 }
 
 .badge-text {
@@ -508,12 +514,13 @@ body {
 }
 
 .section--alt { 
-  background: var(--bg-alt); 
+  background:#111; 
 }
 
-.section__inner { 
-  max-width: 1060px; 
-  margin: 0 auto; 
+.section__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-left: 30px;
 }
 
 .section__tag {
@@ -539,7 +546,7 @@ body {
 
 /* ===== ABOUT ===== */
 .about {
-  background: #fff;
+  background:#0b0b0b;
 }
 
 .about__timeline-layout {
@@ -951,7 +958,7 @@ body {
 
 /* ===== FOOTER ===== */
 .footer { 
-  background: var(--text); 
+  background:#000; 
   color: rgba(255,255,255,.7); 
   padding: 28px 5vw; 
 }
@@ -1067,4 +1074,10 @@ body {
   display: inline-flex;
   animation: spin-slow 4s linear infinite;
   font-size: 24px;
+}
+
+.skill-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
