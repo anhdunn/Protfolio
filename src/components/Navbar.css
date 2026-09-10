@@ -1,0 +1,214 @@
+/* ===== NAV BAR (thanh trên cùng) ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5vw;
+  height: 60px;
+  transition: background .3s, backdrop-filter .3s;
+}
+
+.nav--scrolled {
+  background: rgba(8, 8, 8, .85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #222;
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #60a5fa;
+  display: inline-block;
+}
+
+/* ---- desktop menu ngang ---- */
+.nav__links {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+}
+
+.nav__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: .9rem;
+  color: #ccc;
+  font-weight: 500;
+  transition: color .2s, background .2s;
+}
+
+.nav__link:hover,
+.nav__link.active {
+  color: #60a5fa;
+  background: rgba(96, 165, 250, .15);
+}
+
+/* ---- hamburger ---- */
+.hamburger {
+  display: none;
+  position: relative;
+  width: 26px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 201; /* nổi trên overlay */
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform .3s ease, opacity .2s ease, top .3s ease;
+}
+
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 9px; }
+.hamburger span:nth-child(3) { top: 18px; }
+
+.hamburger--open span:nth-child(1) {
+  top: 9px;
+  transform: rotate(45deg);
+}
+.hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger--open span:nth-child(3) {
+  top: 9px;
+  transform: rotate(-45deg);
+}
+
+/* ============================================= */
+/* ===== FULL-SCREEN OVERLAY MENU (mobile) ===== */
+/* ============================================= */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: #08090c;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 100px 8vw 40px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s ease;
+  overflow: hidden;
+}
+
+.nav-overlay--open {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-overlay__glow {
+  position: absolute;
+  top: -120px;
+  right: -100px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96,165,250,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.nav-overlay__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-overlay__links li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 16px 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .45s ease, transform .45s ease;
+}
+
+.nav-overlay--open .nav-overlay__links li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-overlay__index {
+  font-size: .75rem;
+  font-weight: 700;
+  color: #60a5fa;
+  opacity: .7;
+  min-width: 24px;
+}
+
+.nav-overlay__links button {
+  background: none;
+  border: none;
+  color: #eee;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: color .25s, transform .25s;
+  text-align: left;
+}
+
+.nav-overlay__links li.active button {
+  color: #60a5fa;
+}
+
+.nav-overlay__links button:active {
+  transform: translateX(6px);
+}
+
+.nav-overlay__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  color: #666;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: 16px;
+}
+
+/* ===== chỉ bật overlay + ẩn menu ngang khi ở mobile ===== */
+@media (max-width: 768px) {
+  .nav__links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-overlay {
+    display: none !important;
+  }
+}

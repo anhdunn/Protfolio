@@ -1,0 +1,77 @@
+.cloud-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cloud-mass {
+  position: absolute;
+  width: 95%;
+  height: 95%;
+  background: #fff;
+  /* thân mây hình chữ nhật bo góc lớn */
+  border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+}
+
+/* các cục bướu tròn ghép quanh viền để tạo dáng mây lởm chởm */
+.cloud-mass::before,
+.cloud-mass::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.cloud-mass--a {
+  top: -25%;
+  left: -25%;
+  animation: openA 3s cubic-bezier(.6,0,.3,1) forwards;
+  animation-delay: 0.3s;
+}
+
+.cloud-mass--a::before {
+  width: 45%;
+  height: 55%;
+  bottom: -18%;
+  right: 5%;
+}
+
+.cloud-mass--a::after {
+  width: 55%;
+  height: 65%;
+  bottom: -30%;
+  right: 30%;
+}
+
+.cloud-mass--b {
+  bottom: -25%;
+  right: -25%;
+  animation: openB 3s cubic-bezier(.6,0,.3,1) forwards;
+  animation-delay: 0.45s;
+}
+
+.cloud-mass--b::before {
+  width: 45%;
+  height: 55%;
+  top: -18%;
+  left: 5%;
+}
+
+.cloud-mass--b::after {
+  width: 55%;
+  height: 65%;
+  top: -30%;
+  left: 30%;
+}
+
+@keyframes openA {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-90%, -70%) scale(1.1); opacity: 0; }
+}
+
+@keyframes openB {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(90%, 70%) scale(1.1); opacity: 0; }
+}

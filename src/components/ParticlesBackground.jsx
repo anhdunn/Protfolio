@@ -7,7 +7,9 @@ export default function ParticlesBackground() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let animId;
-    const mouse = { x: null, y: null };
+    const pointer = { x: null, y: null };
+
+    const isMobile = window.innerWidth <= 768;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -16,18 +18,42 @@ export default function ParticlesBackground() {
     resize();
     window.addEventListener("resize", resize);
 
+    // ---- Desktop: mouse ----
     const onMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
     };
     const onMouseLeave = () => {
-      mouse.x = null;
-      mouse.y = null;
+      pointer.x = null;
+      pointer.y = null;
     };
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseleave", onMouseLeave);
 
-    const dots = Array.from({ length: 30 }, () => ({
+    // ---- Mobile: touch ----
+    const onTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        pointer.x = e.touches[0].clientX;
+        pointer.y = e.touches[0].clientY;
+      }
+    };
+    const onTouchEnd = () => {
+      pointer.x = null;
+      pointer.y = null;
+    };
+
+    if (isMobile) {
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+      window.addEventListener("touchend", onTouchEnd);
+    } else {
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseleave", onMouseLeave);
+    }
+
+    // Giảm số lượng dots trên mobile để mượt & đỡ tốn pin
+    const dotCount = isMobile ? 16 : 30;
+    const linkDist = isMobile ? 70 : 90;
+    const pointerDist = isMobile ? 100 : 120;
+
+    const dots = Array.from({ length: dotCount }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       vx: (Math.random() - 0.5) * 0.2,
@@ -56,28 +82,28 @@ export default function ParticlesBackground() {
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 90) {
+          if (dist < linkDist) {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(255,255,255,${(1 - dist / 100) * 0.35})`;
+            ctx.strokeStyle = `rgba(255,255,255,${(1 - dist / linkDist) * 0.35})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         });
       });
 
-      // đường nối từ mouse đến dots gần
-      if (mouse.x !== null) {
+      // đường nối từ con trỏ (chuột hoặc ngón tay) đến dots gần
+      if (pointer.x !== null) {
         dots.forEach((d) => {
-          const dx = d.x - mouse.x;
-          const dy = d.y - mouse.y;
+          const dx = d.x - pointer.x;
+          const dy = d.y - pointer.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < pointerDist) {
             ctx.beginPath();
-            ctx.moveTo(mouse.x, mouse.y);
+            ctx.moveTo(pointer.x, pointer.y);
             ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = `rgba(59,130,246,${(1 - dist / 120) * 0.45})`;
+            ctx.strokeStyle = `rgba(59,130,246,${(1 - dist / pointerDist) * 0.45})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -92,8 +118,13 @@ export default function ParticlesBackground() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseleave", onMouseLeave);
+      if (isMobile) {
+        window.removeEventListener("touchmove", onTouchMove);
+        window.removeEventListener("touchend", onTouchEnd);
+      } else {
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseleave", onMouseLeave);
+      }
     };
   }, []);
 

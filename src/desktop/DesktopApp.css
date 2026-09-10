@@ -64,91 +64,6 @@ body {
   opacity: 0; transform: translateY(28px); 
 }
 
-/* ===== NAV ===== */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5vw;
-  height: var(--nav-h);
-  transition: background .3s, box-shadow .3s, backdrop-filter .3s;
-}
-
-.nav--scrolled{
-    background:rgba(8,8,8,.8);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #222;
-}
-
-.nav__logo {
-  display: flex; 
-  align-items: center; 
-  gap: 8px;
-  font-size: 1.18rem; 
-  font-weight: 700; 
-  color: var(--text);
-  cursor: pointer; 
-  letter-spacing: -.3px;
-}
-
-.logo-dot {
-  width: 10px; 
-  height: 10px; 
-  border-radius: 50%;
-  background: var(--accent); 
-  display: inline-block;
-}
-
-.nav__links {
-  display: flex;
-  list-style: none;
-  gap: 4px;
-  position: absolute;  
-  left: 50%;           
-  transform: translateX(-50%); 
-}
-
-.nav__link {
-  background: none; 
-  border: none; 
-  cursor: pointer;
-  padding: 6px 14px; 
-  border-radius: 8px; 
-  font-size: .92rem;
-  color: var(--text-muted); 
-  transition: color .2s, background .2s;
-  font-weight: 500;
-}
-
-.nav__link:hover, .nav__link.active { 
-  color: var(--accent); 
-  background: var(--accent-light); 
-}
-
-.hamburger {
-  display: none; 
-  flex-direction: column; 
-  gap: 5px; 
-  background: none; 
-  border: none; 
-  cursor: pointer; 
-  padding: 6px;
-}
-
-.hamburger span { 
-  display: block; 
-  width: 22px; 
-  height: 2px; 
-  background: var(--text); 
-  border-radius: 2px; 
-  transition: .3s; 
-}
-
 /* ===== HERO ===== */
 .hero {
   min-height: 100vh;
@@ -478,12 +393,6 @@ body {
   border-color: var(--accent);
 }
 
-.btn--primary {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
-}
-
 .btn-prmiary:hover {
   background: var(--accent-dark);
   border-color: var(--accent-dark);
@@ -559,14 +468,6 @@ body {
 .about__intro {
   position: sticky;
   top: 100px;
-}
-
-.about__intro-role {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 20px;
-  letter-spacing: .04em;
 }
 
 .about__intro-role {
@@ -997,26 +898,6 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .nav__links { 
-    display: none; 
-    flex-direction: column; 
-    position: absolute; 
-    top: var(--nav-h); 
-    left: 0; right: 0; 
-    background: white; 
-    padding: 12px; 
-    box-shadow: 0 8px 24px rgba(0,0,0,.1); 
-    border-top: 1px solid var(--border); 
-  }
-
-  .nav__links.open { 
-    display: flex; 
-  }
-
-  .hamburger { 
-    display: flex; 
-  }
-
   .hero { 
     flex-direction: column; 
     text-align: center; 
